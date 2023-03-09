@@ -1,0 +1,57 @@
+#Exploratory Data Analysis Using R
+
+#Step 1: Loading and viewing data
+
+#we'll be using cars default data in R 
+cars<-mtcars
+
+#using the data() function to load cars dataset
+data(cars)
+
+#Step 2: Summarize data
+#looking first six rows of the dataset
+head(cars)
+
+#quick summary of each variable in the dataset
+summary(cars)
+#For each of the numeric variables we can see the following information:
+#Min = minimum value.
+#1st Qu = first quartile (25th percentile).
+#Median = median value.
+#Mean = mean value.
+#3rd Qu: The value of the third quartile (75th percentile).
+#Max = maximum value.
+
+#to get the dimensions of the dataset in terms of number of rows and number of columns
+dim(cars)
+#the dataset has 50 rows and 2 columns
+
+#Step 3: charts to visualize values in the dataset
+
+#create histogram of values for price
+ggplot(data=cars, aes(x=distp)) +
+  geom_histogram(fill="steelblue", color="black") +
+  ggtitle("Histogram of cars")
+
+#a scatterplot of any pairwise combination of variables
+ggplot(data=diamonds, aes(x=wt, y=disp, color=cut)) + 
+  geom_point()
+
+#create a boxplot of one variable grouped by another variable
+ggplot(data=diamonds, aes(x=wt, y=disp)) + 
+  geom_boxplot(fill="steelblue")
+
+#create a correlation matrix to view the correlation coefficient between each pairwise combination of numeric variables in the dataset
+round(cor(cars[c('mpg', 'cyl', 'disp', 'hp', 'drat', 'wt', 'qsec')]), 2)
+
+#Step 4: Identify Missing Values
+
+#count total number of missing values in each column of the dataset
+sapply(cars, function(x) sum(is.na(x)))
+#replace the missing values in a single column
+df$col[is.na(df$col)] <- mean(df$col, na.rm=TRUE)
+
+#replace the missing values in multiple columns
+for(i in 1:ncol(df)) {
+  df[ , i][is.na(df[ , i])] <- mean(df[ , i], na.rm=TRUE)
+}
